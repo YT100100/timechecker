@@ -51,7 +51,7 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 1) {
     cat(message)
 
   }
-  print_time_forloop
+  loop_timechecker
 
 }
 
