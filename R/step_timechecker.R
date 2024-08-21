@@ -1,6 +1,64 @@
-#' Print predicted finish time.
+#' Print elapsed and remaining time in each code block.
+#'
+#' \code{set_step_timechecker} returns a function that records and prints
+#' processing time in each code block.
+#'
+#' Detail !!!!!!!!!!!!!
+#'
+#' @param !!!!!!!!!!!!!
+#'
+#' @return !!!!!!!!!!!!!
+#'
+#' @seealso \code{\link{set_loop_timechecker}}
 #'
 #' @examples
+#' f <- function() {
+#'
+#'   tc <- set_step_timechecker()
+#'
+#'   tc('Simulation')
+#'   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
+#'   Sys.sleep(2)
+#'
+#'   tc('Increasing explanatory variables')
+#'   df$x2 <- df$x ^ 2
+#'   df$x3 <- df$x ^ 3
+#'   Sys.sleep(3)
+#'
+#'   tc('Regression')
+#'   lmres <- lm(y ~ ., df)
+#'   Sys.sleep(4)
+#'
+#'   tc()
+#'   coef(lmres)
+#'
+#' }
+#' f()
+#'
+#' # combination with set_loop_timechecker
+#' # argument char_pre can be used for readability
+#' tcl <- set_loop_timechecker(3, overwrite = FALSE)
+#' for (i in 1:3) {
+#'
+#'   tcl()
+#'   tc <- set_step_timechecker(char_pre = '  ')
+#'
+#'   tc('Simulation')
+#'   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
+#'   Sys.sleep(2)
+#'
+#'   tc('Increasing explanatory variables')
+#'   df$x2 <- df$x ^ 2
+#'   df$x3 <- df$x ^ 3
+#'   Sys.sleep(3)
+#'
+#'   tc('Regression')
+#'   lmres <- lm(y ~ ., df)
+#'   Sys.sleep(4)
+#'
+#'   tc()
+#'
+#' }
 #' @export
 set_step_timechecker <- function(char_pre = '', char_post = '') {
 
@@ -43,24 +101,3 @@ set_step_timechecker <- function(char_pre = '', char_post = '') {
   step_timechecker
 
 }
-
-# tcl <- set_loop_timechecker(3, overwrite = FALSE)
-# for (i in 1:3) {
-#
-#   tcl()
-#   tc <- set_step_timechecker(char_pre = '  ')
-#
-#   tc('create data')
-#   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
-#   Sys.sleep(2)
-#
-#   tc('plot data')
-#   plot(df)
-#   Sys.sleep(3)
-#
-#   tc('regression')
-#   abline(coef(lm(y ~ x, df)))
-#   Sys.sleep(4)
-#
-#   tc()
-# }

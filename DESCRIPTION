@@ -3,8 +3,10 @@ Type: Package
 Title: Visualization of Processing Time with Standard Output
 Version: 0.0.0.9000
 Authors@R: person("TODA", "Yusuke", email = "yusuke0320.research@gmail.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: A package for neatly displaying the time taken for processing. 
+    By incorporating the implemented functions into iterative processes, 
+    it can predict and display the total time required for the entire process. 
+    It also includes functions to display the time taken for each processing section within a function.
 License: CC BY-NC 4.0
 Encoding: UTF-8
 LazyData: true
