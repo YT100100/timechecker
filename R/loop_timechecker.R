@@ -18,9 +18,9 @@
 #' @param overwrite Logical. Should the message be overwritten?
 #' @param timestep The smallest time step of the output (sec).
 #' @param char_pre A character added to console output.
-#'   It will be printed on the left of the default text.
+#'   It will be printed on the left of the default text. !!!!!!!!!!!!!!!!!!!!!!!
 #' @param char_post A character added to console output.
-#'   It will be printed on the right of the default text.
+#'   It will be printed on the right of the default text. !!!!!!!!!!!!!!!!!!!!!!!
 #'
 #' @return A function \code{loop_timechecker}.
 #'   When placed at the head of the iterations with no argument,
@@ -52,9 +52,16 @@
 #'     Sys.sleep(0.004)
 #'   }
 #' }
+#'
+#' # char_pre or char_post can also be used to check name of current process
+#' iters <- paste0('case', LETTERS[1:10])
+#' tc <- set_loop_timechecker(length(iters))
+#' for (i in iters) {
+#'   tc(char_post = paste0('  Processing ', i))
+#'   Sys.sleep(1)
+#' }
 #' @export
-set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5,
-                                 char_pre = '', char_post = '') {
+set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
 
   # check arguments
   stopifnot(is.numeric(n_iter))
@@ -63,16 +70,16 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5,
   stopifnot(is.logical(overwrite))
   stopifnot(is.numeric(timestep))
   stopifnot(timestep >= 0)
-  stopifnot(is.character(char_pre))
-  stopifnot(is.character(char_post))
 
   # set internal variables
   count <- -1
   start_time <- proc.time()[3]
   prev_print_time <- start_time
 
-  loop_timechecker <- function() {
+  loop_timechecker <- function(char_pre = '', char_post = '') {
 
+    char_pre  <- as.character(char_pre)
+    char_post <- as.character(char_post)
     count <<- count + 1
 
     if (count >= n_iter) {
@@ -96,14 +103,13 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5,
     # create message
     count_chr <- formatC(count, width = nchar(n_iter))
     count_per <- formatC(floor(count / n_iter * 100), width = 3)
-    message <- paste0(count_chr, ' / ', n_iter, ' (', count_per, '%)  ')
+    message <- sprintf('%s / %i (%s%%)', count_chr, n_iter, count_per)
 
     # add time information to the message
     if (count >= 1) {
-      message <- paste0(
-        message,
-        'Elapsed: '  , sec_to_chr(elapsed_time), '  ',
-        'Remaining: ', sec_to_chr(remain_time))
+      message <- sprintf(
+        '%s  Elapsed: %s  Remaining: %s',
+        message, sec_to_chr(elapsed_time), sec_to_chr(remain_time))
     }
 
     # add given characters to the message
@@ -127,3 +133,4 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5,
   loop_timechecker
 
 }
+

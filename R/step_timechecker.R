@@ -72,10 +72,10 @@ set_step_timechecker <- function(char_pre = '', char_post = '') {
 
     if (step >= 2) {
 
-      # print ellapsed time
-      ellapsed_time <- proc.time()[3] - start_time
+      # print elapsed time
+      elapsed_time <- proc.time()[3] - start_time
       message_done <- paste0(
-        'Done. (', sec_to_chr(ellapsed_time), ')', char_post, '\n')
+        'Done. (', sec_to_chr(elapsed_time), ')', char_post, '\n')
 
       # add spaces to the message
       n_dot <- getOption('width') - prev_message_len - nchar(message_done)

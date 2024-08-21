@@ -4,13 +4,7 @@
 \alias{set_loop_timechecker}
 \title{Print elapsed and remaining time in iterative processes.}
 \usage{
-set_loop_timechecker(
-  n_iter,
-  overwrite = TRUE,
-  timestep = 0.5,
-  char_pre = "",
-  char_post = ""
-)
+set_loop_timechecker(n_iter, overwrite = TRUE, timestep = 0.5)
 }
 \arguments{
 \item{n_iter}{The number of iterations.}
@@ -20,10 +14,10 @@ set_loop_timechecker(
 \item{timestep}{The smallest time step of the output (sec).}
 
 \item{char_pre}{A character added to console output.
-It will be printed on the left of the default text.}
+It will be printed on the left of the default text. !!!!!!!!!!!!!!!!!!!!!!!}
 
 \item{char_post}{A character added to console output.
-It will be printed on the right of the default text.}
+It will be printed on the right of the default text. !!!!!!!!!!!!!!!!!!!!!!!}
 }
 \value{
 A function \code{loop_timechecker}.
@@ -69,6 +63,14 @@ for (i in iters1) {
     ans <- c(ans, i * j)
     Sys.sleep(0.004)
   }
+}
+
+# char_pre or char_post can also be used to check name of current process
+iters <- paste0('case', LETTERS[1:10])
+tc <- set_loop_timechecker(length(iters))
+for (i in iters) {
+  tc(char_post = paste0('  Processing ', i))
+  Sys.sleep(1)
 }
 }
 \seealso{
