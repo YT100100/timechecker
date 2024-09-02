@@ -7,17 +7,31 @@
 set_step_timechecker(char_pre = "", char_post = "")
 }
 \arguments{
-\item{!!!!!!!!!!!!!}{}
+\item{char_pre}{String to be added before messages.}
+
+\item{char_post}{String to be added after messages.}
 }
 \value{
-!!!!!!!!!!!!!
+A function \code{step_timechecker}.
+  When placed at the head of each code block,
+  it records and prints the progress and elapsed time.
+  An argument \code{step_name}, a string representing the name of the steps,
+  should be provided. Otherwise, the function judges that
+  it is the end of the measurement.
+  An argument \code{print_done} can also be used if you do not wish to
+  add message when the process of the step ends.
 }
 \description{
 \code{set_step_timechecker} returns a function that records and prints
 processing time in each code block.
 }
 \details{
-Detail !!!!!!!!!!!!!
+This function creates a function named \code{step_timechecker}
+which records and prints processing time in code blocks.
+The created function \code{step_timechecker} should be placed
+at the head of each code block with its name.
+Also, this function should be placed at the end of all steps
+with no argument.
 }
 \examples{
 f <- function() {
@@ -41,9 +55,9 @@ f <- function() {
   coef(lmres)
 
 }
-f()
+ans <- f()
 
-# combination with set_loop_timechecker
+# when you place set_loop_timechecker in a loop,
 # argument char_pre can be used for readability
 tcl <- set_loop_timechecker(3, overwrite = FALSE)
 for (i in 1:3) {
@@ -67,6 +81,36 @@ for (i in 1:3) {
   tc()
 
 }
+
+# when you place set_loop_timechecker inside a step in set_step_timechecker,
+# argument print_done can be used for readability
+f2 <- function() {
+
+  tc <- set_step_timechecker()
+
+  tc('Simulation')
+  n <- 10
+  df <- data.frame(x = 1:n, y = 1:n + rnorm(10))
+  Sys.sleep(2)
+
+  tc('Increasing explanatory variables', print_done = FALSE)
+  tcl <- set_loop_timechecker(n)
+  for (i in seq_len(n)) {
+    tcl()
+    df$x2[i] <- df$x[i] ^ 2
+    df$x3[i] <- df$x[i] ^ 3
+    Sys.sleep(0.2)
+  }
+
+  tc('Regression')
+  lmres <- lm(y ~ ., df)
+  Sys.sleep(4)
+
+  tc()
+  coef(lmres)
+
+}
+ans <- f2()
 }
 \seealso{
 \code{\link{set_loop_timechecker}}

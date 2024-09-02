@@ -1,7 +1,7 @@
 Package: timechecker
 Type: Package
 Title: Visualization of Processing Time with Standard Output
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: person("TODA", "Yusuke", email = "yusuke0320.research@gmail.com", role = c("aut", "cre"))
 Description: A package for neatly displaying the time taken for processing. 
     By incorporating the implemented functions into iterative processes, 

@@ -12,33 +12,33 @@ set_loop_timechecker(n_iter, overwrite = TRUE, timestep = 0.5)
 \item{overwrite}{Logical. Should the message be overwritten?}
 
 \item{timestep}{The smallest time step of the output (sec).}
-
-\item{char_pre}{A character added to console output.
-It will be printed on the left of the default text. !!!!!!!!!!!!!!!!!!!!!!!}
-
-\item{char_post}{A character added to console output.
-It will be printed on the right of the default text. !!!!!!!!!!!!!!!!!!!!!!!}
 }
 \value{
 A function \code{loop_timechecker}.
-  When placed at the head of the iterations with no argument,
-  it records and prints the progress of interation, elapsed time, and predicted remaining time.
+  When placed at the head of the iterations,
+  it records and prints the progress of iteration, elapsed time,
+  and predicted remaining time.
+  You can add arbitrary strings to the printed messages
+  by using \code{char_pre} and \code{char_post} arguments.
 }
 \description{
-\code{set_loop_timechecker} returns a function that records and prints processing time in interative processes.
+\code{set_loop_timechecker} returns a function that records and prints
+processing time in interative processes.
 }
 \details{
 Provided with the number of iterations,
 this function creates a function named \code{loop_timechecker}
 which records and prints processing time in interative process.
-In actual usage, it is recommended to call this function and creating \code{loop_timechecker}
-right before the iteration process, and place the \code{loop_timechecker}
+In actual usage, it is recommended to call this function and
+creating \code{loop_timechecker} right before the iteration process,
+and place the \code{loop_timechecker}
 at the beginning of the iteration process.
 
-If you want to keep all printed records in your console, please set \code{overwrite = FALSE}.
+If you want to keep all printed records in your console,
+please set \code{overwrite = FALSE}.
 
-The \code{timestep} argument determines the frequency of updating printed information
-since too fast an update will decrease visibility.
+The \code{timestep} argument determines the frequency of updating
+printed information since too fast an update will decrease visibility.
 }
 \examples{
 iters <- 1:1000
@@ -57,9 +57,9 @@ ans <- NULL
 tc1 <- set_loop_timechecker(length(iters1), overwrite = FALSE)
 for (i in iters1) {
   tc1()
-  tc2 <- set_loop_timechecker(length(iters2), char_pre = '  ')
+  tc2 <- set_loop_timechecker(length(iters2))
   for (j in iters2) {
-    tc2()
+    tc2(char_pre = '-- ')
     ans <- c(ans, i * j)
     Sys.sleep(0.004)
   }

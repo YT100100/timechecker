@@ -1,30 +1,32 @@
 #' Print elapsed and remaining time in iterative processes.
 #'
-#' \code{set_loop_timechecker} returns a function that records and prints processing time in interative processes.
+#' \code{set_loop_timechecker} returns a function that records and prints
+#' processing time in interative processes.
 #'
 #' Provided with the number of iterations,
 #' this function creates a function named \code{loop_timechecker}
 #' which records and prints processing time in interative process.
-#' In actual usage, it is recommended to call this function and creating \code{loop_timechecker}
-#' right before the iteration process, and place the \code{loop_timechecker}
+#' In actual usage, it is recommended to call this function and
+#' creating \code{loop_timechecker} right before the iteration process,
+#' and place the \code{loop_timechecker}
 #' at the beginning of the iteration process.
 #'
-#' If you want to keep all printed records in your console, please set \code{overwrite = FALSE}.
+#' If you want to keep all printed records in your console,
+#' please set \code{overwrite = FALSE}.
 #'
-#' The \code{timestep} argument determines the frequency of updating printed information
-#' since too fast an update will decrease visibility.
+#' The \code{timestep} argument determines the frequency of updating
+#' printed information since too fast an update will decrease visibility.
 #'
 #' @param n_iter The number of iterations.
 #' @param overwrite Logical. Should the message be overwritten?
 #' @param timestep The smallest time step of the output (sec).
-#' @param char_pre A character added to console output.
-#'   It will be printed on the left of the default text. !!!!!!!!!!!!!!!!!!!!!!!
-#' @param char_post A character added to console output.
-#'   It will be printed on the right of the default text. !!!!!!!!!!!!!!!!!!!!!!!
 #'
 #' @return A function \code{loop_timechecker}.
-#'   When placed at the head of the iterations with no argument,
-#'   it records and prints the progress of interation, elapsed time, and predicted remaining time.
+#'   When placed at the head of the iterations,
+#'   it records and prints the progress of iteration, elapsed time,
+#'   and predicted remaining time.
+#'   You can add arbitrary strings to the printed messages
+#'   by using \code{char_pre} and \code{char_post} arguments.
 #'
 #' @seealso \code{\link{set_step_timechecker}}
 #'
@@ -45,9 +47,9 @@
 #' tc1 <- set_loop_timechecker(length(iters1), overwrite = FALSE)
 #' for (i in iters1) {
 #'   tc1()
-#'   tc2 <- set_loop_timechecker(length(iters2), char_pre = '  ')
+#'   tc2 <- set_loop_timechecker(length(iters2))
 #'   for (j in iters2) {
-#'     tc2()
+#'     tc2(char_pre = '-- ')
 #'     ans <- c(ans, i * j)
 #'     Sys.sleep(0.004)
 #'   }
@@ -64,11 +66,16 @@
 set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
 
   # check arguments
-  stopifnot(is.numeric(n_iter))
   n_iter <- as.integer(n_iter)
+  stopifnot(is.numeric(n_iter))
+  stopifnot(length(n_iter) == 1)
   stopifnot(n_iter >= 1)
-  stopifnot(is.logical(overwrite))
-  stopifnot(is.numeric(timestep))
+
+  overwrite <- as.logical(overwrite)
+  stopifnot(length(overwrite) == 1)
+
+  timestep <- as.numeric(timestep)
+  stopifnot(length(timestep) == 1)
   stopifnot(timestep >= 0)
 
   # set internal variables
@@ -78,6 +85,7 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
 
   loop_timechecker <- function(char_pre = '', char_post = '') {
 
+    # check arguments
     char_pre  <- as.character(char_pre)
     char_post <- as.character(char_post)
     count <<- count + 1
