@@ -111,13 +111,15 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
     # create message
     count_chr <- formatC(count, width = nchar(n_iter))
     count_per <- formatC(floor(count / n_iter * 100), width = 3)
-    message <- sprintf('%s / %i (%s%%)', count_chr, n_iter, count_per)
+    message <- sprintf(
+      '[%s] %s / %i (%s%%)',
+      round(Sys.time()), count_chr, n_iter, count_per)
 
     # add time information to the message
     if (count >= 1) {
       message <- sprintf(
         '[%s] %s  Elapsed: %s  Remaining: %s',
-        sprintf('%s', round(Sys.time())),
+        round(Sys.time()),
         message, sec_to_chr(elapsed_time), sec_to_chr(remain_time))
     }
 
