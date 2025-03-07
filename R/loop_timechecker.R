@@ -116,7 +116,8 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
     # add time information to the message
     if (count >= 1) {
       message <- sprintf(
-        '%s  Elapsed: %s  Remaining: %s',
+        '[%s] %s  Elapsed: %s  Remaining: %s',
+        sprintf('%s', round(Sys.time())),
         message, sec_to_chr(elapsed_time), sec_to_chr(remain_time))
     }
 
