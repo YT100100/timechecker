@@ -20,6 +20,7 @@
 #' @param n_iter The number of iterations.
 #' @param overwrite Logical. Should the message be overwritten?
 #' @param timestep The smallest time step of the output (sec).
+#' @param show_timestamp Logical. Should the time stamp be added to the message?
 #'
 #' @return A function \code{loop_timechecker}.
 #'   When placed at the head of the iterations,
@@ -63,7 +64,8 @@
 #'   Sys.sleep(1)
 #' }
 #' @export
-set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
+set_loop_timechecker <- function(
+    n_iter, overwrite = TRUE, timestep = 0.5, show_timestamp = TRUE) {
 
   # check arguments
   n_iter <- as.integer(n_iter)
@@ -78,10 +80,16 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
   stopifnot(length(timestep) == 1)
   stopifnot(timestep >= 0)
 
+  show_timestamp <- as.logical(show_timestamp)
+  stopifnot(length(show_timestamp) == 1)
+
   # set internal variables
   count <- -1
   start_time <- proc.time()[3]
   prev_print_time <- start_time
+
+  # calculate n. of digit of max iteration
+  n_digit <- pmax(1, floor(log10(n_iter - 1) + 2))
 
   loop_timechecker <- function(char_pre = '', char_post = '') {
 
@@ -109,11 +117,10 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
     remain_time <- elapsed_time / count * (n_iter - count)
 
     # create message
-    count_chr <- formatC(count, width = nchar(n_iter))
+    fmt <- sprintf('%%+ %ii / %%i (%%s%%%%)', n_digit)
     count_per <- formatC(floor(count / n_iter * 100), width = 3)
-    message <- sprintf(
-      '[%s] %s / %i (%s%%)',
-      round(Sys.time()), count_chr, n_iter, count_per)
+    message <- sprintf(fmt, count, n_iter, count_per)
+    message <- gsub('\\+', '', message)
 
     # add time information to the message
     if (count >= 1) {
@@ -124,6 +131,11 @@ set_loop_timechecker <- function(n_iter, overwrite = TRUE, timestep = 0.5) {
 
     # add given characters to the message
     message <- paste0(char_pre, message, char_post)
+
+    # add time stamp
+    if (show_timestamp) {
+      message <- sprintf('[%s] %s', round(Sys.time()), message)
+    }
 
     # add spaces to the message
     n_space <- getOption('width') - nchar(message)
