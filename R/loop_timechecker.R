@@ -64,6 +64,7 @@
 #'   Sys.sleep(1)
 #' }
 #' @export
+
 set_loop_timechecker <- function(
     n_iter, overwrite = TRUE, timestep = 0.5, show_timestamp = TRUE) {
 
@@ -84,12 +85,14 @@ set_loop_timechecker <- function(
   stopifnot(length(show_timestamp) == 1)
 
   # set internal variables
-  count <- -1
+  count <- 0
+  prev_message_len <- 0
   start_time <- proc.time()[3]
   prev_print_time <- start_time
 
-  # calculate n. of digit of max iteration
-  n_digit <- pmax(1, floor(log10(n_iter - 1) + 2))
+  # create message format
+  n_digit <- pmax(1, floor(log10(n_iter) + 1)) + 1
+  fmt <- sprintf('%%+ %ii / %%i (%%s%%%%)', n_digit)
 
   loop_timechecker <- function(char_pre = '', char_post = '') {
 
@@ -98,7 +101,7 @@ set_loop_timechecker <- function(
     char_post <- as.character(char_post)
     count <<- count + 1
 
-    if (count >= n_iter) {
+    if (count >= n_iter + 1) {
       warning('Number of iterations exceeded n_iter.')
       return()
     }
@@ -106,7 +109,7 @@ set_loop_timechecker <- function(
     # check time step
     current_time <- proc.time()[3]
     is_too_fast <- (current_time - prev_print_time) < timestep
-    if (is_too_fast && count >= 1 && count <= n_iter - 2) {
+    if (is_too_fast && count >= 1 && count <= n_iter - 1) {
       return()
     } else {
       prev_print_time <<- current_time
@@ -117,17 +120,14 @@ set_loop_timechecker <- function(
     remain_time <- elapsed_time / count * (n_iter - count)
 
     # create message
-    fmt <- sprintf('%%+ %ii / %%i (%%s%%%%)', n_digit)
     count_per <- formatC(floor(count / n_iter * 100), width = 3)
     message <- sprintf(fmt, count, n_iter, count_per)
     message <- gsub('\\+', '', message)
 
     # add time information to the message
-    if (count >= 1) {
-      message <- sprintf(
-        '%s  Elapsed: %s  Remaining: %s',
-        message, sec_to_chr(elapsed_time), sec_to_chr(remain_time))
-    }
+    message <- sprintf(
+      '%s  Elapsed: %s  Remaining: %s',
+      message, sec_to_chr(elapsed_time), sec_to_chr(remain_time))
 
     # add given characters to the message
     message <- paste0(char_pre, message, char_post)
@@ -137,19 +137,24 @@ set_loop_timechecker <- function(
       message <- sprintf('[%s] %s', round(Sys.time()), message)
     }
 
-    # add spaces to the message
-    n_space <- getOption('width') - nchar(message)
-    n_space <- pmax(n_space, 0)
-    spaces <- paste(rep(' ', n_space), collapse = '')
-    message <- paste0(message, spaces)
+    # reset console to overwrite
+    if (overwrite && count <= n_iter - 1) {
+      spaces <- paste(rep(' ', prev_message_len), collapse = '')
+      cat(spaces, '\r')
+    }
+
+    # print message
+    cat(message)
 
     # add a character for line break to the message
-    message <- if (overwrite && count <= n_iter - 2) {
-      paste0(message, '\r')
+    if (overwrite && count <= n_iter - 1) {
+      cat('\r')
     } else {
-      paste0(message, '\n')
+      cat('\n')
     }
-    cat(message)
+
+    # save message length
+    prev_message_len <<- nchar(message)
 
   }
   loop_timechecker

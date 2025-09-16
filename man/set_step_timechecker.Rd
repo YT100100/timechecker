@@ -4,7 +4,7 @@
 \alias{set_step_timechecker}
 \title{Print elapsed and remaining time in each code block.}
 \usage{
-set_step_timechecker(char_pre = "", char_post = "")
+set_step_timechecker(char_pre = "", char_post = "", show_timestamp = TRUE)
 }
 \arguments{
 \item{char_pre}{String to be added before messages.}
@@ -69,7 +69,7 @@ for (i in 1:3) {
   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
   Sys.sleep(2)
 
-  tc('Increasing explanatory variables')
+  tc('Data augumentation')
   df$x2 <- df$x ^ 2
   df$x3 <- df$x ^ 3
   Sys.sleep(3)
@@ -93,12 +93,12 @@ f2 <- function() {
   df <- data.frame(x = 1:n, y = 1:n + rnorm(10))
   Sys.sleep(2)
 
-  tc('Increasing explanatory variables', print_done = FALSE)
+  tc('Data augumentation', print_done = FALSE)
   tcl <- set_loop_timechecker(n)
   for (i in seq_len(n)) {
-    tcl()
     df$x2[i] <- df$x[i] ^ 2
     df$x3[i] <- df$x[i] ^ 3
+    tcl()
     Sys.sleep(0.2)
   }
 

@@ -4,7 +4,12 @@
 \alias{set_loop_timechecker}
 \title{Print elapsed and remaining time in iterative processes.}
 \usage{
-set_loop_timechecker(n_iter, overwrite = TRUE, timestep = 0.5)
+set_loop_timechecker(
+  n_iter,
+  overwrite = TRUE,
+  timestep = 0.5,
+  show_timestamp = TRUE
+)
 }
 \arguments{
 \item{n_iter}{The number of iterations.}
@@ -12,6 +17,8 @@ set_loop_timechecker(n_iter, overwrite = TRUE, timestep = 0.5)
 \item{overwrite}{Logical. Should the message be overwritten?}
 
 \item{timestep}{The smallest time step of the output (sec).}
+
+\item{show_timestamp}{Logical. Should the time stamp be added to the message?}
 }
 \value{
 A function \code{loop_timechecker}.
