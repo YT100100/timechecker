@@ -60,7 +60,7 @@
 #'   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
 #'   Sys.sleep(2)
 #'
-#'   tc('Increasing explanatory variables')
+#'   tc('Data augumentation')
 #'   df$x2 <- df$x ^ 2
 #'   df$x3 <- df$x ^ 3
 #'   Sys.sleep(3)
@@ -84,12 +84,12 @@
 #'   df <- data.frame(x = 1:n, y = 1:n + rnorm(10))
 #'   Sys.sleep(2)
 #'
-#'   tc('Increasing explanatory variables', print_done = FALSE)
+#'   tc('Data augumentation', print_done = FALSE)
 #'   tcl <- set_loop_timechecker(n)
 #'   for (i in seq_len(n)) {
-#'     tcl()
 #'     df$x2[i] <- df$x[i] ^ 2
 #'     df$x3[i] <- df$x[i] ^ 3
+#'     tcl()
 #'     Sys.sleep(0.2)
 #'   }
 #'
@@ -103,13 +103,16 @@
 #' }
 #' ans <- f2()
 #' @export
-set_step_timechecker <- function(char_pre = '', char_post = '') {
+set_step_timechecker <- function(
+    char_pre = '', char_post = '', show_timestamp = TRUE) {
 
   # check arguments
   char_pre  <- as.character(char_pre)
   char_post <- as.character(char_post)
   stopifnot(length(char_pre ) == 1)
   stopifnot(length(char_post) == 1)
+  show_timestamp <- as.logical(show_timestamp)
+  stopifnot(length(show_timestamp) == 1)
 
   # initial settings
   step <- 0
@@ -137,8 +140,9 @@ set_step_timechecker <- function(char_pre = '', char_post = '') {
         message_done <- paste0(
           'Done. (', sec_to_chr(elapsed_time), ')', char_post, '\n')
 
-        # add spaces to the message
+        # add dots to the message
         n_dot <- getOption('width') - prev_message_len - nchar(message_done)
+        if (n_dot <= 0) n_dot <- 3
         dots <- paste(rep('.', n_dot), collapse = '')
         message_done <- paste0(dots, message_done)
         cat(message_done)
@@ -155,6 +159,9 @@ set_step_timechecker <- function(char_pre = '', char_post = '') {
       # print name of the next step
       message_start <- paste0(char_pre, step, '. ', step_name)
       if (!print_done) message_start <- paste0(message_start, '\n')
+      if (show_timestamp) {
+        message_start <- sprintf('[%s] %s', round(Sys.time()), message_start)
+      }
       cat(message_start)
 
       # save message length
