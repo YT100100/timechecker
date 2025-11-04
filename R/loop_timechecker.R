@@ -1,21 +1,21 @@
 #' Print elapsed and remaining time in iterative processes.
 #'
 #' \code{set_loop_timechecker} returns a function that records and prints
-#' processing time in interative processes.
+#' processing time in iterative processes.
 #'
 #' Provided with the number of iterations,
 #' this function creates a function named \code{loop_timechecker}
-#' which records and prints processing time in interative process.
+#' which records and prints processing time in iterative process.
 #' In actual usage, it is recommended to call this function and
 #' creating \code{loop_timechecker} right before the iteration process,
 #' and place the \code{loop_timechecker}
-#' at the beginning of the iteration process.
+#' at the end of the iteration process.
 #'
 #' If you want to keep all printed records in your console,
 #' please set \code{overwrite = FALSE}.
 #'
 #' The \code{timestep} argument determines the frequency of updating
-#' printed information since too fast an update will decrease visibility.
+#' printed information since too fast updates will decrease visibility.
 #'
 #' @param n_iter The number of iterations.
 #' @param overwrite Logical. Should the message be overwritten?
@@ -23,7 +23,7 @@
 #' @param show_timestamp Logical. Should the time stamp be added to the message?
 #'
 #' @return A function \code{loop_timechecker}.
-#'   When placed at the head of the iterations,
+#'   When placed at the end of the iterations,
 #'   it records and prints the progress of iteration, elapsed time,
 #'   and predicted remaining time.
 #'   You can add arbitrary strings to the printed messages
@@ -32,13 +32,18 @@
 #' @seealso \code{\link{set_step_timechecker}}
 #'
 #' @examples
+#' \dontrun{
+#' # These examples are not set to run automatically
+#' # because they were intentionally designed to take time
+#' # and fail the test.
+#'
 #' iters <- 1:1000
 #' ans <- NULL
 #' tc <- set_loop_timechecker(length(iters))
 #' for (i in iters) {
-#'   tc()
 #'   ans <- c(ans, i)
 #'   Sys.sleep(0.002)
+#'   tc()
 #' }
 #'
 #' # For multiple loops, overwrite and char_pre arguments can be used for readability
@@ -47,21 +52,22 @@
 #' ans <- NULL
 #' tc1 <- set_loop_timechecker(length(iters1), overwrite = FALSE)
 #' for (i in iters1) {
-#'   tc1()
 #'   tc2 <- set_loop_timechecker(length(iters2))
 #'   for (j in iters2) {
-#'     tc2(char_pre = '-- ')
 #'     ans <- c(ans, i * j)
 #'     Sys.sleep(0.004)
+#'     tc2(char_pre = '-- ')
 #'   }
+#'   tc1()
 #' }
 #'
 #' # char_pre or char_post can also be used to check name of current process
 #' iters <- paste0('case', LETTERS[1:10])
 #' tc <- set_loop_timechecker(length(iters))
 #' for (i in iters) {
-#'   tc(char_post = paste0('  Processing ', i))
 #'   Sys.sleep(1)
+#'   tc(char_post = paste0('  Processing ', i))
+#' }
 #' }
 #' @export
 

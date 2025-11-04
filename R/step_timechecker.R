@@ -12,6 +12,7 @@
 #'
 #' @param char_pre String to be added before messages.
 #' @param char_post String to be added after messages.
+#' @param show_timestamp Logical. Should the time stamp be added to the message?
 #'
 #' @return A function \code{step_timechecker}.
 #'   When placed at the head of each code block,
@@ -25,6 +26,11 @@
 #' @seealso \code{\link{set_loop_timechecker}}
 #'
 #' @examples
+#' \dontrun{
+#' # These examples are not set to run automatically
+#' # because they were intentionally designed to take time
+#' # and fail the test.
+#'
 #' f <- function() {
 #'
 #'   tc <- set_step_timechecker()
@@ -33,7 +39,7 @@
 #'   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
 #'   Sys.sleep(2)
 #'
-#'   tc('Increasing explanatory variables')
+#'   tc('Data augumentation')
 #'   df$x2 <- df$x ^ 2
 #'   df$x3 <- df$x ^ 3
 #'   Sys.sleep(3)
@@ -53,7 +59,6 @@
 #' tcl <- set_loop_timechecker(3, overwrite = FALSE)
 #' for (i in 1:3) {
 #'
-#'   tcl()
 #'   tc <- set_step_timechecker(char_pre = '  ')
 #'
 #'   tc('Simulation')
@@ -70,6 +75,7 @@
 #'   Sys.sleep(4)
 #'
 #'   tc()
+#'   tcl()
 #'
 #' }
 #'
@@ -89,8 +95,8 @@
 #'   for (i in seq_len(n)) {
 #'     df$x2[i] <- df$x[i] ^ 2
 #'     df$x3[i] <- df$x[i] ^ 3
-#'     tcl()
 #'     Sys.sleep(0.2)
+#'     tcl(char_pre = '- ')
 #'   }
 #'
 #'   tc('Regression')
@@ -102,6 +108,7 @@
 #'
 #' }
 #' ans <- f2()
+#' }
 #' @export
 set_step_timechecker <- function(
     char_pre = '', char_post = '', show_timestamp = TRUE) {

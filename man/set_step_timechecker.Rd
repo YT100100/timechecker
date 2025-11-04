@@ -10,6 +10,8 @@ set_step_timechecker(char_pre = "", char_post = "", show_timestamp = TRUE)
 \item{char_pre}{String to be added before messages.}
 
 \item{char_post}{String to be added after messages.}
+
+\item{show_timestamp}{Logical. Should the time stamp be added to the message?}
 }
 \value{
 A function \code{step_timechecker}.
@@ -34,6 +36,11 @@ Also, this function should be placed at the end of all steps
 with no argument.
 }
 \examples{
+\dontrun{
+# These examples are not set to run automatically
+# because they were intentionally designed to take time
+# and fail the test.
+
 f <- function() {
 
   tc <- set_step_timechecker()
@@ -42,7 +49,7 @@ f <- function() {
   df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
   Sys.sleep(2)
 
-  tc('Increasing explanatory variables')
+  tc('Data augumentation')
   df$x2 <- df$x ^ 2
   df$x3 <- df$x ^ 3
   Sys.sleep(3)
@@ -62,7 +69,6 @@ ans <- f()
 tcl <- set_loop_timechecker(3, overwrite = FALSE)
 for (i in 1:3) {
 
-  tcl()
   tc <- set_step_timechecker(char_pre = '  ')
 
   tc('Simulation')
@@ -79,6 +85,7 @@ for (i in 1:3) {
   Sys.sleep(4)
 
   tc()
+  tcl()
 
 }
 
@@ -98,8 +105,8 @@ f2 <- function() {
   for (i in seq_len(n)) {
     df$x2[i] <- df$x[i] ^ 2
     df$x3[i] <- df$x[i] ^ 3
-    tcl()
     Sys.sleep(0.2)
+    tcl(char_pre = '- ')
   }
 
   tc('Regression')
@@ -111,6 +118,7 @@ f2 <- function() {
 
 }
 ans <- f2()
+}
 }
 \seealso{
 \code{\link{set_loop_timechecker}}
