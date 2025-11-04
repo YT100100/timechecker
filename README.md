@@ -21,7 +21,7 @@ for (i in iters) {
 }
 ```
 
-![Demo movie of set_loop_timechecker function.](https://github.com/user-attachments/assets/1bf7d19e-24da-4cc6-ae03-0bf83fee9c28)
+![Demo movie of set_loop_timechecker function.](https://github.com/user-attachments/assets/f3ef2689-d01c-4af0-99b5-bc4bc2aec90c)
 
 `set_step_timechecker` function also returns a function, which visualizes ellapsed time in each processing step. This function is intended to be placed in a function.
 
@@ -50,4 +50,4 @@ f <- function() {
 ans <- f()
 ```
 
-![Demo movie of set_step_timechecker function.](https://github.com/user-attachments/assets/6cf14dc6-6ce3-49d8-b465-ff5570e15826)
+![Demo movie of set_step_timechecker function.](https://github.com/user-attachments/assets/62df6d82-fe07-44da-ba36-abbd4833787b)
