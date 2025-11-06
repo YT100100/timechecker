@@ -1,3 +1,10 @@
+# timechecker 1.1.5
+
+CRAN submission
+
+-   Modification of package description
+-   Completing cran-comments
+
 # timechecker 1.1.4
 
 Preparation for CRAN submission
