@@ -1,18 +1,19 @@
+## Test environments
+
+-   Local Windows 11, R 4.1.3
+-   R-hub:
+    -   linux
+    -   m1-san
+    -   macos
+    -   macos-arm64
+    -   windows
+-   Win-builder:
+    -   R-release
+
 ## R CMD check results
 
-Code:
+There were no ERRORs, WARNINGs, or NOTEs.
 
-```         
-devtools::check()
-```
+## Downstream dependencies
 
-Result:
-
-```         
--- R CMD check results ----------------------------------------------- timechecker 1.1.3 ----
-Duration: 1m 30.8s
-
-0 errors v | 0 warnings v | 0 notes v
-```
-
-## R-hub v2 check results
+None.
