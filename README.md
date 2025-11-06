@@ -8,7 +8,7 @@ devtools::install_github('YT100100/timechecker')
 
 ## Usage
 
-This package consists of two functions. `set_loop_timechecker` function returns a function, which visualizes the progress of interation process.
+This package consists of two functions. `set_loop_timechecker` function returns a function, which visualizes the progress of iteration process.
 
 ```r
 iters <- 1:1000
@@ -23,7 +23,7 @@ for (i in iters) {
 
 ![Demo movie of set_loop_timechecker function.](https://github.com/user-attachments/assets/f3ef2689-d01c-4af0-99b5-bc4bc2aec90c)
 
-`set_step_timechecker` function also returns a function, which visualizes ellapsed time in each processing step. This function is intended to be placed in a function.
+`set_step_timechecker` function also returns a function, which visualizes elapsed time in each processing step. This function is intended to be placed in a function.
 
 ```r
 f <- function() {
