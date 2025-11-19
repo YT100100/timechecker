@@ -1,13 +1,12 @@
 Package: timechecker
 Type: Package
 Title: Visualization of Processing Time with Standard Output
-Version: 1.0.3
-Authors@R: person("TODA", "Yusuke", email = "yusuke0320.research@gmail.com", role = c("aut", "cre"))
-Description: A package for neatly displaying the time taken for processing. 
-    By incorporating the implemented functions into iterative processes, 
-    it can predict and display the total time required for the entire process. 
-    It also includes functions to display the time taken for each processing section within a function.
-License: CC BY-NC 4.0
+Version: 1.1.5
+Authors@R: person("Toda", "Yusuke", email = "yusuke0320.research@gmail.com", role = c("aut", "cre"))
+Description: Provides functions to display processing time in a clear and structured way. 
+    One function supports iterative workflows by predicting and showing the total time required, 
+    while another reports the time taken for individual steps within a process.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
