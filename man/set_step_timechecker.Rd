@@ -4,7 +4,12 @@
 \alias{set_step_timechecker}
 \title{Print elapsed and remaining time in each code block.}
 \usage{
-set_step_timechecker(char_pre = "", char_post = "", show_timestamp = TRUE)
+set_step_timechecker(
+  char_pre = "",
+  char_post = "",
+  show_timestamp = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{char_pre}{String to be added before messages.}
@@ -12,6 +17,8 @@ set_step_timechecker(char_pre = "", char_post = "", show_timestamp = TRUE)
 \item{char_post}{String to be added after messages.}
 
 \item{show_timestamp}{Logical. Should the time stamp be added to the message?}
+
+\item{verbose}{Logical. Should the progress be printed in the console?}
 }
 \value{
 A function \code{step_timechecker}.
@@ -36,11 +43,7 @@ Also, this function should be placed at the end of all steps
 with no argument.
 }
 \examples{
-\dontrun{
-# These examples are not set to run automatically
-# because they were intentionally designed to take time
-# and fail the test.
-
+\donttest{
 f <- function() {
 
   tc <- set_step_timechecker()

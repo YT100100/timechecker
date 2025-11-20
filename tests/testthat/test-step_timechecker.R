@@ -34,7 +34,7 @@ test_that("set_loop_timechecker", {
     df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
     Sys.sleep(2)
 
-    tc('Increasing explanatory variables')
+    tc('Data augumentation')
     df$x2 <- df$x ^ 2
     df$x3 <- df$x ^ 3
     Sys.sleep(3)
@@ -77,5 +77,29 @@ test_that("set_loop_timechecker", {
 
   }
   ans <- f2()
+
+  # verbose
+  f <- function() {
+
+    tc <- set_step_timechecker(verbose = FALSE)
+
+    tc('Simulation')
+    df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
+    Sys.sleep(2)
+
+    tc('Data augumentation')
+    df$x2 <- df$x ^ 2
+    df$x3 <- df$x ^ 3
+    Sys.sleep(3)
+
+    tc('Regression')
+    lmres <- lm(y ~ ., df)
+    Sys.sleep(4)
+
+    tc()
+    coef(lmres)
+
+  }
+  ans <- f()
 
 })

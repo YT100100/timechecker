@@ -8,7 +8,8 @@ set_loop_timechecker(
   n_iter,
   overwrite = TRUE,
   timestep = 0.5,
-  show_timestamp = TRUE
+  show_timestamp = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ set_loop_timechecker(
 \item{timestep}{The smallest time step of the output (sec).}
 
 \item{show_timestamp}{Logical. Should the time stamp be added to the message?}
+
+\item{verbose}{Logical. Should the progress be printed in the console?}
 }
 \value{
 A function \code{loop_timechecker}.
@@ -48,11 +51,7 @@ The \code{timestep} argument determines the frequency of updating
 printed information since too fast updates will decrease visibility.
 }
 \examples{
-\dontrun{
-# These examples are not set to run automatically
-# because they were intentionally designed to take time
-# and fail the test.
-
+\donttest{
 iters <- 1:1000
 ans <- NULL
 tc <- set_loop_timechecker(length(iters))

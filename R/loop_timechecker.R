@@ -21,6 +21,7 @@
 #' @param overwrite Logical. Should the message be overwritten?
 #' @param timestep The smallest time step of the output (sec).
 #' @param show_timestamp Logical. Should the time stamp be added to the message?
+#' @param verbose Logical. Should the progress be printed in the console?
 #'
 #' @return A function \code{loop_timechecker}.
 #'   When placed at the end of the iterations,
@@ -32,11 +33,7 @@
 #' @seealso \code{\link{set_step_timechecker}}
 #'
 #' @examples
-#' \dontrun{
-#' # These examples are not set to run automatically
-#' # because they were intentionally designed to take time
-#' # and fail the test.
-#'
+#' \donttest{
 #' iters <- 1:1000
 #' ans <- NULL
 #' tc <- set_loop_timechecker(length(iters))
@@ -68,9 +65,11 @@
 #'   Sys.sleep(1)
 #'   tc(char_post = paste0('  Processing ', i))
 #' }
+#' }
 #' @export
 set_loop_timechecker <- function(
-    n_iter, overwrite = TRUE, timestep = 0.5, show_timestamp = TRUE) {
+    n_iter, overwrite = TRUE, timestep = 0.5, show_timestamp = TRUE,
+    verbose = TRUE) {
 
   # check arguments
   n_iter <- as.integer(n_iter)
@@ -144,17 +143,17 @@ set_loop_timechecker <- function(
     # reset console to overwrite
     if (overwrite && count <= n_iter - 1) {
       spaces <- paste(rep(' ', prev_message_len), collapse = '')
-      cat(spaces, '\r')
+      if (verbose) cat(spaces, '\r')
     }
 
     # print message
-    cat(message)
+    if (verbose) cat(message)
 
     # add a character for line break to the message
     if (overwrite && count <= n_iter - 1) {
-      cat('\r')
+      if (verbose) cat('\r')
     } else {
-      cat('\n')
+      if (verbose) cat('\n')
     }
 
     # save message length

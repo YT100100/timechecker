@@ -4,6 +4,7 @@ CRAN submission
 
 -   Modification of package description
 -   Completing cran-comments
+-   Adding `verbose` option
 
 # timechecker 1.1.4
 
