@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-devtools::install_github('YT100100/timechecker')
+install.packages('timechecker')
 ```
 
 ## Usage

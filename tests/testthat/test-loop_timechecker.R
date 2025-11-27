@@ -49,7 +49,7 @@ test_that("set_loop_timechecker", {
     tc2 <- set_loop_timechecker(length(iters2))
     for (j in iters2) {
       ans <- c(ans, i * j)
-      Sys.sleep(0.004)
+      Sys.sleep(0.02)
       tc2(char_pre = '-- ')
     }
     tc1()

@@ -1,3 +1,10 @@
+# timechecker 1.1.5.9000
+
+An update in `set_step_timechecker()`
+
+-   Modifying the `set_step_timechecker` function to display the number of seconds to the second decimal place when the processing time is less than 60 seconds.
+-   Updating installation guide in README.md
+
 # timechecker 1.1.5
 
 CRAN submission

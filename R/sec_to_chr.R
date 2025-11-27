@@ -1,10 +1,9 @@
-sec_to_chr <- function(total) {
+sec_to_chr <- function(total, round_s = TRUE) {
 
   rest <- total
 
   second <- rest %% 60
   rest <- rest - second
-  second <- round(second)
 
   minute <- rest %% 3600
   rest <- rest - minute
@@ -15,6 +14,12 @@ sec_to_chr <- function(total) {
   hour <- hour / 3600
 
   day <- rest / 86400
+
+  if (!round_s & total < 60) {
+    second <- sprintf('%.02f', second)
+  } else {
+    second <- sprintf('%.00f', second)
+  }
 
   ans <- ''
   ans <- paste0(ans, ifelse(day    == 0, '', paste0(day   , 'd ')))

@@ -145,7 +145,7 @@ set_step_timechecker <- function(
         # print elapsed time
         elapsed_time <- proc.time()[3] - start_time
         message_done <- paste0(
-          'Done. (', sec_to_chr(elapsed_time), ')', char_post, '\n')
+          'Done. (', sec_to_chr(elapsed_time, round_s = FALSE), ')', char_post, '\n')
 
         # add dots to the message
         n_dot <- getOption('width') - prev_message_len - nchar(message_done)
