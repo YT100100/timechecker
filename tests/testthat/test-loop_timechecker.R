@@ -63,4 +63,14 @@ test_that("set_loop_timechecker", {
     tc(char_post = paste0('  Processing ', i))
   }
 
+  # verbose
+  iters <- 1:9
+  ans <- NULL
+  tc <- set_loop_timechecker(length(iters), verbose = FALSE)
+  for (i in iters) {
+    ans <- c(ans, i)
+    Sys.sleep(0.2)
+    tc()
+  }
+
 })

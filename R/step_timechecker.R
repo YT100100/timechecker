@@ -13,6 +13,7 @@
 #' @param char_pre String to be added before messages.
 #' @param char_post String to be added after messages.
 #' @param show_timestamp Logical. Should the time stamp be added to the message?
+#' @param verbose Logical. Should the progress be printed in the console?
 #'
 #' @return A function \code{step_timechecker}.
 #'   When placed at the head of each code block,
@@ -26,11 +27,7 @@
 #' @seealso \code{\link{set_loop_timechecker}}
 #'
 #' @examples
-#' \dontrun{
-#' # These examples are not set to run automatically
-#' # because they were intentionally designed to take time
-#' # and fail the test.
-#'
+#' \donttest{
 #' f <- function() {
 #'
 #'   tc <- set_step_timechecker()
@@ -111,7 +108,7 @@
 #' }
 #' @export
 set_step_timechecker <- function(
-    char_pre = '', char_post = '', show_timestamp = TRUE) {
+    char_pre = '', char_post = '', show_timestamp = TRUE, verbose = TRUE) {
 
   # check arguments
   char_pre  <- as.character(char_pre)
@@ -152,7 +149,7 @@ set_step_timechecker <- function(
         if (n_dot <= 0) n_dot <- 3
         dots <- paste(rep('.', n_dot), collapse = '')
         message_done <- paste0(dots, message_done)
-        cat(message_done)
+        if (verbose) cat(message_done)
 
       }
 
@@ -169,7 +166,7 @@ set_step_timechecker <- function(
       if (show_timestamp) {
         message_start <- sprintf('[%s] %s', round(Sys.time()), message_start)
       }
-      cat(message_start)
+      if (verbose) cat(message_start)
 
       # save message length
       prev_message_len <<- nchar(message_start)

@@ -3,9 +3,7 @@ Type: Package
 Title: Visualization of Processing Time with Standard Output
 Version: 1.1.5.9000
 Authors@R: person("Toda", "Yusuke", email = "yusuke0320.research@gmail.com", role = c("aut", "cre"))
-Description: Provides functions to display processing time in a clear and structured way. 
-    One function supports iterative workflows by predicting and showing the total time required, 
-    while another reports the time taken for individual steps within a process.
+Description: Displays processing time in a clear and structured way. One function supports iterative workflows by predicting and showing the total time required, while another reports the time taken for individual steps within a process.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
