@@ -1,5 +1,7 @@
 # timechecker: An R package to visualize processing time with standard output
 
+日本語のREADMEは![こちら](https://github.com/YT100100/timechecker/README_ja.md)
+
 ## Installation
 
 ```
