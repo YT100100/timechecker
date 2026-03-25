@@ -1,0 +1,53 @@
+# timechecker: 処理時間を可視化する R パッケージ
+
+## インストール方法
+
+```
+install.packages('timechecker')
+```
+
+## 使い方
+
+このパッケージは２つの関数で構成されています。`set_loop_timechecker`関数は、ループ処理の進行状況を可視化します。
+
+```r
+iters <- 1:1000
+ans <- NULL
+tc <- set_loop_timechecker(length(iters))
+for (i in iters) {
+  ans <- c(ans, i)
+  Sys.sleep(0.002)
+  tc()
+}
+```
+
+![Demo movie of set_loop_timechecker function.](https://github.com/user-attachments/assets/f3ef2689-d01c-4af0-99b5-bc4bc2aec90c)
+
+`set_step_timechecker`関数も同様に関数を返しますが、こちらは処理ステップごとの経過時間を可視化します。他の関数内部に組み込んで使われることを想定しています。
+
+```r
+f <- function() {
+
+  tc <- set_step_timechecker()
+
+  tc('Simulation')
+  df <- data.frame(x = 1:10, y = 1:10 + rnorm(10))
+  Sys.sleep(2)
+
+  tc('Data augumentation')
+  df$x2 <- df$x ^ 2
+  df$x3 <- df$x ^ 3
+  Sys.sleep(3)
+
+  tc('Regression')
+  lmres <- lm(y ~ ., df)
+  Sys.sleep(4)
+
+  tc()
+  coef(lmres)
+
+}
+ans <- f()
+```
+
+![Demo movie of set_step_timechecker function.](https://github.com/user-attachments/assets/62df6d82-fe07-44da-ba36-abbd4833787b)
